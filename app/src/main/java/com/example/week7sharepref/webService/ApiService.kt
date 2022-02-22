@@ -1,5 +1,6 @@
 package com.example.week7sharepref.webService
 
+import android.content.Context
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -35,6 +36,26 @@ class Constant{
 
     companion object{
         const val BASE_URL = "https://apibarang.herokuapp.com/"
+
+        fun setToken(context: Context, token: String){
+            val sharePref = context.getSharedPreferences("Token", Context.MODE_PRIVATE)
+            sharePref.edit().apply {
+                putString("Token", token)
+                apply()
+            }
+        }
+
+        fun getToken(context: Context) : String{
+            val sharePref = context.getSharedPreferences("Token", Context.MODE_PRIVATE)
+            val token = sharePref.getString("Token", "Undef")
+            return token!!
+        }
+
+        fun clearToken(context: Context){
+            val sharePref = context.getSharedPreferences("Token", Context.MODE_PRIVATE)
+            sharePref.edit().clear().apply()
+        }
+
     }
 
 }
